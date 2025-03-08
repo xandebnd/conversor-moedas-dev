@@ -10,6 +10,7 @@ export default function Home() {
 	const [currency, setCurrency] = useState("");
 	const [newCurrency, setNewCurrency] = useState("");
 	const [convertedValue, setConvertedValue] = useState(0);
+	const [isValueValid, setIsValueValid] = useState(true);
 
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
@@ -20,31 +21,38 @@ export default function Home() {
 
 		const data = await response.json();
 
-		const isValueValid = value
-			.replace(",", ".")
-			.match(/^[0-9]+(\.[0-9]{1,2})?$/);
-
-		if (!isValueValid) {
-			alert("Valor inválido");
+		if (!data[`${currency}${newCurrency}`]) {
+			setIsValueValid(false);
 			return;
 		}
+
+		const isValueValid = value.replace(",", ".").match(/^\d+(\.\d{1,2})?$/);
+
+		if (!isValueValid) {
+			setIsValueValid(false);
+			return;
+		}
+
+		setIsValueValid(true);
 
 		const convertedValue =
 			data[`${currency}${newCurrency}`].bid * +value.replace(",", ".");
 
 		setConvertedValue(convertedValue);
+
+		(document.getElementById("form") as HTMLFormElement).reset();
 	};
 
 	return (
 		<main className="bg-yellow-200 h-screen flex items-center justify-center">
 			<section className="flex flex-col items-center justify-center">
-				<div className="px-10 rounded-md bg-gray-200 shadow-md">
+				<div className="px-20 rounded-md bg-gray-200 shadow-md ">
 					<div className="flex flex-col items-center justify-center">
 						<Image src={Logo} alt="Logo do banco" priority width={100} />
 						<h1 className="font-bold text-3xl mb-5">ConvertDev Coins</h1>
 					</div>
 
-					<form className="flex flex-col gap-3" onSubmit={onSubmit}>
+					<form className="flex flex-col gap-3" onSubmit={onSubmit} id="form">
 						<div className="flex flex-col">
 							<label htmlFor="value" className="font-semibold text-xl">
 								Valor
@@ -52,8 +60,14 @@ export default function Home() {
 							<input
 								type="text"
 								className="border rounded-md px-5 py-2 outline-none"
+								placeholder="500"
 								onChange={({ target }) => setValue(target.value)}
 							/>
+							{!isValueValid && (
+								<p className="text-red-500 text-sm">
+									Valor inválido. Por favor, insira um valor válido.
+								</p>
+							)}
 						</div>
 
 						<div className="flex flex-col">
@@ -64,8 +78,10 @@ export default function Home() {
 								name="currency"
 								className="outline-none border px-5 py-2 rounded-md"
 								onChange={(e) => setCurrency(e.target.value)}
+								defaultValue={"DEFAULT"}
+								required
 							>
-								<option disabled selected value="">
+								<option disabled value="DEFAULT">
 									Selecione uma moeda
 								</option>
 								<option value="USD">Dólar Americano (USD)</option>
@@ -90,8 +106,10 @@ export default function Home() {
 								id="currency"
 								className="outline-none border px-5 py-2 rounded-md"
 								onChange={(e) => setNewCurrency(e.target.value)}
+								defaultValue={"DEFAULT"}
+								required
 							>
-								<option disabled selected value="">
+								<option disabled value="DEFAULT">
 									Selecione uma moeda
 								</option>
 								<option value="USD">Dólar Americano (USD)</option>
