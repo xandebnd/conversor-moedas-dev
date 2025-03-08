@@ -20,8 +20,8 @@ ConvertDev Coins é um conversor de moedas simples desenvolvido com Next.js e Re
 ### 1. Clone o Repositório
 
 ```sh
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/xandebnd/conversor-moedas-dev.git
+cd conversor-moedas-dev
 ```
 
 ### 2. Instale as Dependências
