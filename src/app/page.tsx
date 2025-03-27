@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
@@ -44,39 +44,51 @@ export default function Home() {
 	};
 
 	return (
-		<main className="bg-yellow-200 h-screen flex items-center justify-center">
-			<section className="flex flex-col items-center justify-center">
-				<div className="px-20 rounded-md bg-gray-200 shadow-md ">
-					<div className="flex flex-col items-center justify-center">
-						<Image src={Logo} alt="Logo do banco" priority width={100} />
-						<h1 className="font-bold text-3xl mb-5">ConvertDev Coins</h1>
+		<main className="bg-yellow-200 h-screen flex items-center justify-center p-5">
+			<section className="flex flex-col items-center justify-center w-full max-w-lg">
+				<div className="px-8 py-10 rounded-lg bg-gray-100 shadow-lg w-full">
+					<div className="flex flex-col items-center justify-center mb-8">
+						<Image src={Logo} alt="Logo do banco" priority width={80} />
+						<h1 className="font-bold text-2xl text-gray-800 mt-4">
+							ConvertDev Coins
+						</h1>
 					</div>
 
-					<form className="flex flex-col gap-3" onSubmit={onSubmit} id="form">
+					<form
+						className="flex flex-col gap-5"
+						onSubmit={onSubmit}
+						id="form"
+					>
 						<div className="flex flex-col">
-							<label htmlFor="value" className="font-semibold text-xl">
+							<label
+								htmlFor="value"
+								className="font-semibold text-lg text-gray-700"
+							>
 								Valor
 							</label>
 							<input
 								type="text"
-								className="border rounded-md px-5 py-2 outline-none"
+								className="border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-yellow-400"
 								placeholder="500"
 								onChange={({ target }) => setValue(target.value)}
 							/>
 							{!isValueValid && (
-								<p className="text-red-500 text-sm">
+								<p className="text-red-500 text-sm mt-1">
 									Valor inválido. Por favor, insira um valor válido.
 								</p>
 							)}
 						</div>
 
 						<div className="flex flex-col">
-							<label htmlFor="currency" className="font-semibold text-xl">
+							<label
+								htmlFor="currency"
+								className="font-semibold text-lg text-gray-700"
+							>
 								De
 							</label>
 							<select
 								name="currency"
-								className="outline-none border px-5 py-2 rounded-md"
+								className="outline-none border px-4 py-2 rounded-lg focus:ring-2 focus:ring-yellow-400"
 								onChange={(e) => setCurrency(e.target.value)}
 								defaultValue={"DEFAULT"}
 								required
@@ -98,13 +110,16 @@ export default function Home() {
 						</div>
 
 						<div className="flex flex-col">
-							<label htmlFor="currency" className="font-semibold text-xl">
+							<label
+								htmlFor="currency"
+								className="font-semibold text-lg text-gray-700"
+							>
 								Para
 							</label>
 							<select
 								name="currency"
 								id="currency"
-								className="outline-none border px-5 py-2 rounded-md"
+								className="outline-none border px-4 py-2 rounded-lg focus:ring-2 focus:ring-yellow-400"
 								onChange={(e) => setNewCurrency(e.target.value)}
 								defaultValue={"DEFAULT"}
 								required
@@ -128,12 +143,12 @@ export default function Home() {
 						<input
 							type="submit"
 							value="Converter"
-							className="mt-5 px-5 py-2 rounded-md bg-orange-300 mb-10 font-semibold cursor-pointer hover:bg-orange-400 duration-200 shadow-md"
+							className="mt-5 px-5 py-3 rounded-lg bg-yellow-400 text-white font-semibold cursor-pointer hover:bg-yellow-500 duration-200 shadow-md"
 						/>
 					</form>
 					{convertedValue > 0 && (
-						<div className="text-center">
-							<h2 className="font-semibold text-xl">
+						<div className="text-center mt-8">
+							<h2 className="font-semibold text-lg text-gray-800">
 								Valor convertido:{" "}
 								<span className="text-yellow-600 font-bold">
 									{new Intl.NumberFormat("pt-BR", {
